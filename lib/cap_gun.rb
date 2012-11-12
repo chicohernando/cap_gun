@@ -41,7 +41,7 @@ require File.join(File.dirname(__FILE__), *%w[.. vendor action_mailer_tls lib sm
 #
 # See README for full install/config instructions.
 module CapGun
-  VERSION = '0.2.4'
+  VERSION = '0.2.5'
 
   # This mailer is configured with a capistrano variable called "cap_gun_email_envelope"
   class Mailer < ActionMailer::Base
@@ -62,11 +62,20 @@ module CapGun
       def deployment_notification(capistrano)
         presenter = Presenter.new(capistrano)
         
-        content_type "text/plain"
-        from         presenter.from
-        recipients   presenter.recipients
-        subject      presenter.subject
-        body         presenter.body
+        if presenter.action_mailer_version == 2
+          content_type "text/plain"
+          from         presenter.from
+          recipients   presenter.recipients
+          subject      presenter.subject
+          body         presenter.body
+        else
+          mail(:content_type => 'text/plain',
+            :from => presenter.from,
+            :recipients => presenter.recipients,
+            :subject => presenter.subject,
+            :body => presenter.body
+          )
+        end
       end
     end
     

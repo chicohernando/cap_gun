@@ -4,11 +4,16 @@ module CapGun
   class Presenter
     DEFAULT_SENDER = %("CapGun" <cap_gun@example.com>)
     DEFAULT_EMAIL_PREFIX = "[DEPLOY]"
+    DEFAULT_ACTION_MAILER_VERSION = 2
     
     attr_accessor :capistrano
     
     def initialize(capistrano)
       self.capistrano = capistrano
+    end
+
+    def action_mailer_version
+      capistrano[:cap_gun_action_mailer_version] || DEFAULT_ACTION_MAILER_VERSION
     end
 
     def recipients
