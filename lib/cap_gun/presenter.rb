@@ -17,7 +17,7 @@ module CapGun
     end
 
     def recipients
-      capistrano[:cap_gun_email_envelope][:recipients]
+      capistrano[:cap_gun_email_envelope][:recipients].join(', ')
     end
 
     def email_prefix

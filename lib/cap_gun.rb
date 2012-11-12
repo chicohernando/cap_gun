@@ -71,7 +71,7 @@ module CapGun
         else
           mail(:content_type => 'text/plain',
             :from => presenter.from,
-            :to => presenter.recipients,
+            :recipients => presenter.recipients,
             :subject => presenter.subject,
             :body => presenter.body
           )
@@ -87,7 +87,7 @@ if Object.const_defined?("Capistrano")
 
     namespace :cap_gun do
       desc "Send notification of the current release and the previous release via email."
-      task :email do
+      task :email, :roles => :app do
         CapGun::Mailer.load_mailer_config(self)
         if CapGun::Mailer.respond_to?(:deployment_notification)
           CapGun::Mailer.deployment_notification(self).deliver
