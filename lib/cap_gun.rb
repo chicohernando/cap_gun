@@ -71,7 +71,7 @@ module CapGun
         else
           mail(:content_type => 'text/plain',
             :from => presenter.from,
-            :recipients => presenter.recipients,
+            :to => presenter.recipients,
             :subject => presenter.subject,
             :body => presenter.body
           )
